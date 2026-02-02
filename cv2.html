@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Professional CV - Jason Ghattas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100%;
+        }
+        body {
+            position: relative;
+            min-height: 100%;
+            background: #0c192c;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            color: rgba(220, 220, 220, 0.9);
+        } 
+
+        .container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        } 
+        
+        .bubbles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+        }
+        
+        .bubbles span {
+            position: absolute;
+            display: block;
+            width: var(--size, 30px);
+            height: var(--size, 30px);
+            background: #4fc3dc;
+            margin: 0;
+            border-radius: 50%;
+            bottom: -10px;
+            left: var(--left, 0%);
+            box-shadow: 0 0 0 8px rgba(79, 195, 220, 0.15),
+                        0 0 25px rgba(79, 195, 220, 0.4),
+                        0 0 50px rgba(79, 195, 220, 0.2);
+            animation: animate linear infinite;
+            animation-duration: var(--dur, 15s);
+            animation-delay: var(--delay, 0s);
+            opacity: 0.6;
+        } 
+
+        @keyframes animate {
+            0% {
+                transform: translateY(0) scale(0);
+            }
+            100% {
+                transform: translateY(-110vh) scale(1);
+            }
+        }
+        
+        .bubbles span:nth-child(even) {
+            background: #ff2d75;
+            box-shadow: 0 0 0 8px rgba(255, 45, 117, 0.15),
+                        0 0 25px rgba(255, 45, 117, 0.4),
+                        0 0 50px rgba(255, 45, 117, 0.2);
+        }
+
+        /* Centered content container */
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 40px 20px;
+            width: 100%;
+            max-width: 1100px;
+            color: rgba(220, 220, 220, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        /* Main content wrapper */
+        .main-content {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* CV content styling - Dark theme */
+        .cv-content {
+            background: rgba(10, 15, 25, 0.85);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5),
+                        0 0 10px rgba(255, 122, 24, 0.08),
+                        0 0 20px rgba(175, 0, 45, 0.06);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header: name and avatar with shadow border only */
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 900px;
+            background: rgba(10, 15, 25, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .avatar {
+            background: rgba(20, 25, 40, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: right;
+            min-width: auto;
+            /* Shadow border only for the picture and name */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(79, 195, 220, 0.3),
+                        0 0 40px rgba(79, 195, 220, 0.2),
+                        inset 0 0 15px rgba(79, 195, 220, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(79, 195, 220, 0.4),
+                        0 0 50px rgba(79, 195, 220, 0.3),
+                        inset 0 0 20px rgba(79, 195, 220, 0.15);
+        }
+        
+        .avatar img {
+            display: block;
+            border-radius: 6px;
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .avatar img:hover {
+            transform: scale(1.05);
+        }
+        
+        .avatar-name {
+            display: block;
+            margin-top: 12px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #4fc3dc;
+            text-align: right;
+            text-shadow: 0 0 10px rgba(79, 195, 220, 0.3);
+        }
+
+        /* Main title without shadow border */
+        .header-title {
+            margin: 0;
+            margin-right: 12px;
+            font-size: 2.5rem;
+            color: #ff7a18;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(255, 122, 24, 0.4);
+            letter-spacing: -1px;
+        }
+
+        /* CV sections styling */
+        .cv-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .cv-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-title {
+            color: #ff7a18;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(255, 122, 24, 0.3);
+            text-shadow: 0 0 10px rgba(255, 122, 24, 0.2);
+        }
+
+        .section-content {
+            padding-left: 20px;
+        }
+
+        .section-content ul {
+            list-style-type: none;
+        }
+
+        .section-content li {
+            margin-bottom: 12px;
+            color: rgba(200, 200, 200, 0.8);
+            position: relative;
+            padding-left: 25px;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .section-content li:hover {
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .section-content li:before {
+            content: "•";
+            color: #ff2d75;
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
+            text-shadow: 0 0 10px rgba(255, 45, 117, 0.3);
+        }
+
+        .section-content strong {
+            color: #4fc3dc;
+            font-weight: 600;
+            text-shadow: 0 0 8px rgba(79, 195, 220, 0.2);
+        }
+
+        .section-content br {
+            margin-bottom: 5px;
+            display: block;
+            content: "";
+        }
+
+        /* Centering adjustments */
+        .centered-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* Back button styling */
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            background: linear-gradient(135deg, 
+                      rgba(255, 122, 24, 1) 0%,
+                      rgba(220, 100, 20, 1) 25%,
+                      rgba(175, 0, 45, 1) 75%,
+                      rgba(150, 0, 40, 1) 100%);
+            color: #fff;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(175, 0, 45, 0.35),
+                        0 0 15px rgba(255, 122, 24, 0.25),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .back-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                      transparent, 
+                      rgba(255, 255, 255, 0.15), 
+                      transparent);
+            transition: left 0.7s;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(175, 0, 45, 0.45),
+                        0 0 20px rgba(255, 122, 24, 0.35),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .back-btn:hover::before {
+            left: 100%;
+        }
+
+        .back-btn:active {
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: 0 4px 15px rgba(175, 0, 45, 0.3),
+                        0 0 10px rgba(255, 122, 24, 0.2);
+        }
+
+        /* Decorative elements */
+        .decorative-line {
+            height: 2px;
+            width: 100px;
+            background: linear-gradient(90deg, 
+                      transparent, 
+                      #4fc3dc, 
+                      #ff2d75, 
+                      transparent);
+            margin: 10px auto 20px;
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .content {
+                padding: 30px 15px;
+            }
+            
+            .main-content {
+                max-width: 95%;
+            }
+            
+            .page-header {
+                max-width: 95%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+                padding: 15px;
+            }
+            
+            .avatar {
+                align-self: center;
+                text-align: center;
+            }
+            
+            .avatar-name {
+                text-align: center;
+            }
+            
+            .header-title {
+                text-align: center;
+                margin-right: 0;
+                font-size: 2rem;
+            }
+            
+            .cv-content {
+                padding: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .back-btn {
+                padding: 10px 25px;
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .content {
+                padding: 20px 10px;
+            }
+            
+            .avatar img {
+                width: 180px;
+                height: 135px;
+            }
+            
+            .header-title {
+                font-size: 1.8rem;
+            }
+            
+            .cv-content {
+                padding: 15px;
+            }
+            
+            .section-content li {
+                padding-left: 20px;
+            }
+            
+            .section-content li:before {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="bubbles"></div>
+    </div> 
+    
+    <div class="centered-container">
+        <div class="content">
+            <header class="page-header">
+                <h1 class="header-title">MY CV</h1>
+                <figure class="avatar">
+                    <img src="anony.webp" alt="Jason Ghattas" width="200" height="150">
+                    <figcaption class="avatar-name">Jason Ghattas</figcaption>
+                </figure>
+            </header>
+            
+            <div class="main-content">
+                <div class="cv-content">
+                    <section class="cv-section">
+                        <h2 class="section-title">Personal Info</h2>
+                        <div class="decorative-line"></div>
+                        <div class="section-content">
+                            <ul>
+                                <li><strong>Full Name:</strong> Jason Ghattas</li>
+                                <li><strong>Date of Birth:</strong> July 23, 2007</li>
+                                <li><strong>Email:</strong> jason.ghattas@example.com</li>
+                                <li><strong>Phone:</strong> +961 ** *** ***</li>
+                                <li><strong>Address:</strong> El Shouf, Lebanon</li>
+                            </ul>
+                        </div>
+                    </section>
+                    
+                    <section class="cv-section">
+                        <h2 class="section-title">Education</h2>
+                        <div class="decorative-line"></div>
+                        <div class="section-content">
+                            <ul>
+                                <li><strong>High School Diploma</strong><br>MSA Abra</li>
+                                <li><strong>Online Courses</strong><br>Web Development Fundamentals</li>
+                                <li><strong>USJ Courses</strong><br>Data Science</li>
+                            </ul>
+                        </div>
+                    </section>
+                    
+                    <section class="cv-section">
+                        <h2 class="section-title">Languages</h2>
+                        <div class="decorative-line"></div>
+                        <div class="section-content">
+                            <ul>
+                                <li><strong>Arabic:</strong> Main Language</li>
+                                <li><strong>English:</strong> Fluent (Reading, Writing, Speaking)</li>
+                                <li><strong>French:</strong> Basic Knowledge</li>
+                            </ul>
+                        </div>
+                    </section>
+                    
+                    <section class="cv-section">
+                        <h2 class="section-title">Technical Skills</h2>
+                        <div class="decorative-line"></div>
+                        <div class="section-content">
+                            <ul>
+                                <li><strong>Programming:</strong> HTML, CSS, Python (Learning)</li>
+                                <li><strong>Web Development:</strong> Front-end development basics</li>
+                                <li><strong>Tools:</strong> VS Code, Git, GitHub</li>
+                                <li><strong>Design:</strong> Basic Principles</li>
+                            </ul>
+                        </div>
+                    </section>
+                    
+                    <section class="cv-section">
+                        <h2 class="section-title">Projects & Experience</h2>
+                        <div class="decorative-line"></div>
+                        <div class="section-content">
+                            <ul>
+                                <li><strong>Personal CV Website</strong><br>Designed and developed this CV portfolio</li>
+                                <li><strong>Web Design Projects</strong><br>Multiple practice projects focusing on modern web design</li>
+                                <li><strong>Learning Journey</strong><br>Continuous learning in web technologies and programming</li>
+                            </ul>
+                        </div>
+                    </section>
+                    
+                    <section class="cv-section">
+                        <h2 class="section-title">Interests & Goals</h2>
+                        <div class="decorative-line"></div>
+                        <div class="section-content">
+                            <ul>
+                                <li><strong>Career Goal:</strong> Become a professional full-stack developer</li>
+                                <li><strong>Interests:</strong> Web technologies, UI/UX design, Programming</li>
+                                <li><strong>Learning:</strong> Currently exploring html, css files</li>
+                                <li><strong>Future Plans:</strong> Become an expert in programming</li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+                
+                <!-- Back to Home Button -->
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="cv1.html" class="back-btn">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.bubbles');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            const count = 25;
+            
+            for (let i = 0; i < count; i++) {
+                const bubble = document.createElement('span');
+                
+                const size = Math.floor(Math.random() * 40) + 10;
+                const left = Math.random() * 100; 
+                const duration = Math.random() * 20 + 15; 
+                const delay = Math.random() * -15; 
+                
+                bubble.style.setProperty('--size', `${size}px`);
+                bubble.style.setProperty('--left', `${left}%`);
+                bubble.style.setProperty('--dur', `${duration}s`);
+                bubble.style.setProperty('--delay', `${delay}s`);
+                
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${left}%`;
+                bubble.style.animationDuration = `${duration}s`;
+                bubble.style.animationDelay = `${delay}s`;
+                
+                const opacity = Math.random() * 0.3 + 0.4;
+                bubble.style.opacity = opacity;
+                
+                container.appendChild(bubble);
+            }
+
+            // Add hover effects to CV sections
+            const sections = document.querySelectorAll('.cv-section');
+            sections.forEach(section => {
+                section.addEventListener('mouseenter', () => {
+                    section.style.transform = 'translateY(-5px)';
+                    section.style.transition = 'transform 0.3s ease';
+                });
+                
+                section.addEventListener('mouseleave', () => {
+                    section.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Add click effect to back button
+            const backBtn = document.querySelector('.back-btn');
+            if (backBtn) {
+                backBtn.addEventListener('click', function(e) {
+                    // Create ripple effect
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size/2;
+                    const y = e.clientY - rect.top - size/2;
+                    
+                    ripple.style.position = 'absolute';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+                    ripple.style.transform = 'scale(0)';
+                    ripple.style.animation = 'ripple 0.6s linear';
+                    ripple.style.width = size + 'px';
+                    ripple.style.height = size + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.style.left = x + 'px';
+                    this.appendChild(ripple);
+                    
+                    // Remove ripple after animation
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            }
+            
+            // Add CSS for ripple effect
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+</html>
